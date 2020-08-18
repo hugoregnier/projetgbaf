@@ -79,7 +79,7 @@ h3
     border-radius: 30px;
     border-style: solid;
     border-color: black;
-    width: 100%;
+    width: 95%;
     padding: 8px;
 }
 
@@ -129,8 +129,7 @@ h3
     font-family: open_sansregular;
     text-align: center;
 }
-
-  
+ 
 #partners
     {
     font-family: open_sansregular;
@@ -140,22 +139,49 @@ h3
     align-items: center;
     border: solid;
     background-color: white;
-    border-radius: 100px;
+    border-radius: 10px;
     margin-bottom: 30px;
     margin-right: 300px;
     margin-left: 300px;
     }
    
-    
+
+@media screen and (max-width: 1024px)
+{
+    #partners
+    {
+        margin-left: 10px;
+        margin-right: 10px;
+
+
+    }
+    .logo_partner
+    {
+        justify-content: center;
+        height: 100%;
+        width: 100%;
+    }
+}
+
 #partner
 {
     font-family: open_sansregular;
     text-align: center;
 }
+#partner h1, h2, h3
+{
+    text-align: center;
+}
+.logo_partner
+{
+   
+    
+}
 #commentspartner
 {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
 }
 #thecomment
 {
@@ -166,35 +192,52 @@ h3
     text-align: left;
     border-style: solid;
     border-radius: 5px;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
 }
 .commenttext
 {
     text-align: center;
-    font-size: 3em;
+    font-size: 1.5em;
     margin-top: 10px;
-    border-radius: 30px;
+    border-radius: 15px;
     border-style: solid;
     border-color: black;
-    padding: 15px;
+    box-shadow: 0 8px 16px 0 black;
+    
 }
 .button
 {
 
     background-color: white;
-    border-style: dotted;
+    border-style: solid;
     border-radius: 30px;
     border-color: black;
     padding: 12px;
     font-size: 0.9em;
     font-weight: bold;
     margin-top: 20px;
+    box-shadow: 0 8px 16px 0 black;
     
 }
-.button:hover 
+.button:hover
 {
     background-color: #ff6363;
 }
+.button_comment
+{
+    background-color: white;
+    border-style: solid;
+    border-radius: 30px;
+    border-color: black;
+    box-shadow: 0 8px 16px 0 black;
+    margin-left: 15px;
+}
+.button_comment:hover
+{
+    background-color: #ff6363;
+}
+
+
 main 
 {
     background: linear-gradient(#FFF , #2f4f4f);
@@ -207,6 +250,7 @@ main
 
 footer 
 {
+    border-top: solid black 0.7px;
     height: 150px;
     width: 100%;
     background-color: #2f4f4f;
@@ -217,8 +261,7 @@ footer
 }
 footer p, footer a 
 {
-    color: white;
+    color: black;
     text-decoration: none;
 }
-
 
