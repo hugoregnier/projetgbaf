@@ -2,16 +2,19 @@
 session_start();
 require('controller/frontend.php');
 
-if (isset($_GET['action']))
-{   if (!isset($_SESSION['username'])) { 
-        if ($_GET['action'] == 'connexion') { 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+if (isset($_GET['action'])) {
+switch ($_GET['action']) {
+
+
+    case 'connexion': 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
                 connexion($_POST['username'], $_POST['pass']); 
-            } else { 
-                pageConnexion();
-            }
-        } elseif ($_GET['action'] == 'register') { 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+            } else { pageConnexion(); }
+        break;
+
+
+    case 'register': 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 register(
                     $_POST['lastname'],
                     $_POST['firstname'],
@@ -19,31 +22,35 @@ if (isset($_GET['action']))
                     $_POST['pass'],
                     $_POST['checkpass'],
                     $_POST['question'],
-                    $_POST['answer'] 
+                    $_POST['answer']
                 );
-            } else { 
-                pageRegister();
-            }
-        }
-         elseif ($_GET['action'] == 'forgetpass') { 
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+            } else { pageRegister();}
+        break;
+
+
+    case 'forgetpass': 
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($_POST['change_pass_form'] == 'username') { 
-                    forgetPassUsername($_POST['username']); 
+                    forgetPassUsername($_POST['username']);
                 } elseif ($_POST['change_pass_form'] == 'question') {
                     forgetPassQuestion($_POST['answer']);
                 } elseif ($_POST['change_pass_form'] == 'newpass') {
                     forgetPassNew($_POST['username'], $_POST['newpass'], $_POST['checkpass']);
                 }
-            } else {
-                pageForgetpass();
-            }
-        } 
-    } else {
-        
-    if ($_GET['action'] == 'listPartners') {
-        listPartners();
-    }
-    elseif ($_GET['action'] == 'partner') {
+            } else { pageForgetpass();}
+        break;
+
+
+    case 'listPartners':
+        if (isset($_SESSION['username'])) {
+            listPartners();
+        }else {
+            pageConnexion();
+        }
+        break;
+
+    
+    case 'partner':
         if (isset($_GET['id'])) {
             partner();
         }
@@ -51,11 +58,19 @@ if (isset($_GET['action']))
             echo 'Erreur : aucun identifiant';
             listPartners();
         }
-    }
-    elseif ($_GET['action'] == 'logout') {
+        break;
+
+    
+    case 'logout':
+        if (isset($_SESSION['username'])) {
             logout();
-        }
-    elseif ($_GET['action'] == 'account') {
+        }else {
+            pageConnexion();
+        } 
+        break;                
+    
+
+    case 'account':
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if ($_POST['account_form'] == 'username') {
                     changeUsername($_POST['username']);
@@ -71,32 +86,37 @@ if (isset($_GET['action']))
             } else {
                 pageAccount();
             }
-        }
-    elseif ($_GET['action'] == 'addComment') {
+        break;
+    
+
+    case 'addComment':
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             if (!empty($_POST['comment'])) {
                 addComment($_GET['id'], $_SESSION['username'], $_POST['comment']);
             }
-            else {
-                echo 'Erreur : tous les champs ne sont pas remplis !';
+            else { echo 'Erreur : le champ commentaire n\'est pas pas remplis !'; }
             }
+           
+        break;
+
+
+    case 'addVote':
+        var_dump($_POST);
+        addVote($_POST['up'], $_POST['down']);
+        break;    
+
+
+    default:
+        listPartners();
+        break;
+}
+}
+else {
+    if (isset($_SESSION['username'])) {
+            listPartners();
+        }else {
+            pageConnexion();
         }
-            else {
-                echo 'Erreur : aucun identifiant de partenaire';
-        }   
-  } elseif ($_GET['action'] == 'addVote') {
-                    var_dump($_POST);
-                    addVote($_POST['up'], $_POST['down']);
-                } 
-  
-         
-        }   
 }
 
-else {
-    if (!isset($_SESSION['username'])) {
-        pageConnexion(); 
-}else {
-    listPartners();
- }
-}
+?>
